@@ -291,7 +291,7 @@ static void mdss_fb_set_bl_brightness(struct led_classdev *led_cdev,
 				      enum led_brightness value)
 {
 	struct msm_fb_data_type *mfd = dev_get_drvdata(led_cdev->dev->parent);
-	u64 bl_lvl, brightness_min;
+	int bl_lvl, brightness_min;
 	
 	brightness_min = 10;
 
