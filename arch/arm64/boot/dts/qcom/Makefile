@@ -468,14 +468,14 @@ sdm632-rcm-overlay.dtbo-base := sdm632.dtb \
 sdm632-qrd-overlay.dtbo-base := sdm632.dtb \
 	sdm632-pm8004.dtb
 
-sdm439-mtp-overlay.dtbo-base := sdm439.dtb \
-	sda439.dtb \
-	msm8937-interposer-sdm439.dtb
-sdm439-cdp-overlay.dtbo-base := sdm439.dtb \
-	sda439.dtb \
-	msm8937-interposer-sdm439.dtb
-sdm439-qrd-overlay.dtbo-base := sdm439.dtb \
-	msm8937-interposer-sdm439.dtb
+# sdm439-mtp-overlay.dtbo-base := sdm439.dtb \
+# 	sda439.dtb \
+# 	msm8937-interposer-sdm439.dtb
+# sdm439-cdp-overlay.dtbo-base := sdm439.dtb \
+# 	sda439.dtb \
+# 	msm8937-interposer-sdm439.dtb
+# sdm439-qrd-overlay.dtbo-base := sdm439.dtb \
+# 	msm8937-interposer-sdm439.dtb
 
 sdm439-external-codec-mtp-overlay.dtbo-base := sdm439.dtb
 sdm439-rcm-overlay.dtbo-base := sdm439.dtb
@@ -521,12 +521,20 @@ dtb-$(CONFIG_ARCH_MSM8953) += msm8953-cdp.dtb \
 	msm8953-pmi8937-ext-codec-mtp.dtb \
 	msm8953-pmi632-cdp-s2.dtb
 
-dtb-$(CONFIG_ARCH_MSM8937) += msm8937-pmi8950-mtp.dtb \
-	msm8937-interposer-sdm439-cdp.dtb \
-	msm8937-interposer-sdm439-mtp.dtb \
-	msm8937-interposer-sdm439-qrd.dtb \
-	msm8937-interposer-sdm429-cdp.dtb \
-	msm8937-interposer-sdm429-mtp.dtb
+dtb-$(CONFIG_ARCH_MSM8937) += msm8937-rumi.dtb \
+	msm8937-pmi8950-cdp.dtb \
+	msm8937-pmi8937-cdp.dtb \
+	msm8937-pmi8940-cdp.dtb \
+	msm8937-pmi8950-ext-codec-cdp.dtb \
+	msm8937-pmi8950-mtp.dtb \
+	msm8937-pmi8937-mtp.dtb \
+	msm8937-pmi8940-mtp.dtb \
+	msm8937-pmi8950-rcm.dtb \
+	msm8937-pmi8937-rcm.dtb \
+	msm8937-pmi8950-qrd-sku1.dtb \
+	msm8937-pmi8937-qrd-sku2.dtb \
+	msm8937-pmi8950-qrd-sku1-dvt1.dtb \
+	msm8937-pmi8937-qrd-sku2-dvt1.dtb
 
 ifeq ($(CONFIG_MACH_XIAOMI_MSM8940),y)
 dtb-$(CONFIG_MACH_XIAOMI_SANTONI) += msm8940-pmi8950-qrd-sku7-santoni.dtb

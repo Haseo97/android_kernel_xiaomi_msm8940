@@ -50,9 +50,11 @@
 
 		qcom,msm-ext-pa = "primary";
 		qcom,msm-mclk-freq = <9600000>;
-		qcom,msm-mbhc-hphl-swh = <0>;
+		qcom,msm-mbhc-hphl-swh = <1>;
 		qcom,msm-mbhc-gnd-swh = <0>;
-		qcom,msm-hs-micbias-type = "external";
+		qcom,msm-hs-micbias-type = "internal";
+		ext-spk-amp-gpio = <&tlmm 124 0>;
+		headset-gpio = <&tlmm 129 0>;
 		qcom,msm-micbias1-ext-cap;
 
 		qcom,audio-routing =
@@ -62,10 +64,10 @@
 				"RX_I2S_CLK", "MCLK",
 				"TX_I2S_CLK", "MCLK",
 				"MIC BIAS External", "Handset Mic",
-				"MIC BIAS External2", "Headset Mic",
+				"MIC BIAS Internal2", "Headset Mic",
 				"MIC BIAS External", "Secondary Mic",
 				"AMIC1", "MIC BIAS External",
-				"AMIC2", "MIC BIAS External2",
+				"AMIC2", "MIC BIAS Internal2",
 				"AMIC3", "MIC BIAS External",
 				"ADC1_IN", "ADC1_OUT",
 				"ADC2_IN", "ADC2_OUT",
@@ -93,7 +95,7 @@
 		asoc-cpu = <&dai_pri_auxpcm>,
 			<&dai_mi2s0>, <&dai_mi2s1>,
 			<&dai_mi2s2>, <&dai_mi2s3>,
-			<&dai_mi2s4>, <&dai_mi2s5>,
+			<&dai_mi2s4>,
 			<&sb_0_rx>, <&sb_0_tx>, <&sb_1_rx>, <&sb_1_tx>,
 			<&sb_3_rx>, <&sb_3_tx>, <&sb_4_rx>, <&sb_4_tx>,
 			<&bt_sco_rx>, <&bt_sco_tx>,
@@ -259,7 +261,7 @@
 				"msm-pcm-dsp-noirq";
 
 		asoc-cpu = <&dai_pri_auxpcm>,
-				<&dai_mi2s2>, <&dai_mi2s3>, <&dai_mi2s5>,
+				<&dai_mi2s2>, <&dai_mi2s3>, <&dai_mi2s4>,
 				<&sb_0_rx>, <&sb_0_tx>, <&sb_1_rx>, <&sb_1_tx>,
 				<&sb_2_rx>, <&sb_2_tx>, <&sb_3_rx>, <&sb_3_tx>,
 				<&sb_4_rx>, <&sb_4_tx>, <&sb_5_tx>,
@@ -408,20 +410,20 @@
 		#address-cells = <2>;
 		#size-cells = <0>;
 		interrupt-parent = <&spmi_bus>;
-		interrupts = <0x1 0xf0 0x0 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x1 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x2 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x3 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x4 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x5 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x6 IRQ_TYPE_NONE>,
-			<0x1 0xf0 0x7 IRQ_TYPE_NONE>,
-			<0x1 0xf1 0x0 IRQ_TYPE_NONE>,
-			<0x1 0xf1 0x1 IRQ_TYPE_NONE>,
-			<0x1 0xf1 0x2 IRQ_TYPE_NONE>,
-			<0x1 0xf1 0x3 IRQ_TYPE_NONE>,
-			<0x1 0xf1 0x4 IRQ_TYPE_NONE>,
-			<0x1 0xf1 0x5 IRQ_TYPE_NONE>;
+		interrupts = <0x1 0xf0 0x0>,
+			<0x1 0xf0 0x1>,
+			<0x1 0xf0 0x2>,
+			<0x1 0xf0 0x3>,
+			<0x1 0xf0 0x4>,
+			<0x1 0xf0 0x5>,
+			<0x1 0xf0 0x6>,
+			<0x1 0xf0 0x7>,
+			<0x1 0xf1 0x0>,
+			<0x1 0xf1 0x1>,
+			<0x1 0xf1 0x2>,
+			<0x1 0xf1 0x3>,
+			<0x1 0xf1 0x4>,
+			<0x1 0xf1 0x5>;
 		interrupt-names = "spk_cnp_int",
 				"spk_clip_int",
 				"spk_ocp_int",

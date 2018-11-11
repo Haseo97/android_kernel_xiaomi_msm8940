@@ -30,6 +30,14 @@
 			compatible = "android,firmware";
 			fstab {
 				compatible = "android,fstab";
+				vendor {
+					compatible = "android,vendor";
+					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/cust";
+					type = "ext4";
+					mnt_flags = "ro,barrier=1,discard";
+					fsmgr_flags = "wait";
+					status = "ok";
+				};
 				system {
 					compatible = "android,system";
 					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/system";
@@ -95,6 +103,14 @@
 			size = <0 0x1000000>;
 		};
 
+		qseecom_ta_mem: qseecom_ta_region {
+			compatible = "shared-dma-pool";
+			alloc-ranges = <0 0x00000000 0 0xffffffff>;
+			reusable;
+			alignment = <0 0x400000>;
+			size = <0 0x1000000>;
+		};
+
 		adsp_mem: adsp_region@0 {
 			compatible = "shared-dma-pool";
 			reusable;
@@ -130,6 +146,13 @@
 	};
 
 	soc: soc { };
+
+	vendor: vendor {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges = <0 0 0 0xffffffff>;
+		compatible = "simple-bus";
+	};
 
 };
 
@@ -256,6 +279,8 @@
 		compatible = "qcom,msm_sps_4k";
 		qcom,pipe-attr-ee;
 	};
+
+	thermal_zones: thermal-zones {};
 
 	tsens: tsens@4a8000 {
 		compatible = "qcom,msm8937-tsens";
@@ -1972,7 +1997,6 @@
 #include "msm-pm8937.dtsi"
 #include "msm-gdsc-8916.dtsi"
 #include "msm8937-camera.dtsi"
-#include "msm-audio.dtsi"
 #include "msm8937-audio.dtsi"
 #include "msm8937-mdss.dtsi"
 #include "msm8937-mdss-pll.dtsi"

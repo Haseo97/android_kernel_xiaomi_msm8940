@@ -11,14 +11,30 @@
  * GNU General Public License for more details.
  */
 
-/dts-v1/;
+&int_codec {
+	status = "okay";
+	qcom,msm-hs-micbias-type = "external";
 
-#include "msm8937-santoni.dtsi"
-#include "msm8937-pmi8950-mtp.dtsi"
+	asoc-wsa-codec-names = "wsa881x-i2c-codec.2-000f";
+	asoc-wsa-codec-prefixes = "SpkrMono";
 
-/ {
-	model = "Qualcomm Technologies, Inc. MSM8937-PMI8950 MTP";
-	compatible = "qcom,msm8937-mtp", "qcom,msm8937", "qcom,mtp";
-	qcom,board-id= <8 0>;
-	qcom,pmic-id = <0x10019 0x010011 0x0 0x0>;
+	msm-vdd-wsa-switch-supply = <&pm8937_l13>;
+	qcom,msm-vdd-wsa-switch-voltage = <3075000>;
+	qcom,msm-vdd-wsa-switch-current = <5000>;
+};
+
+&pmic_analog_codec {
+	status = "okay";
+};
+
+&msm_digital_codec {
+	status = "okay";
+};
+
+&wsa881x_i2c_f {
+	status = "okay";
+};
+
+&wsa881x_i2c_45 {
+	status = "okay";
 };

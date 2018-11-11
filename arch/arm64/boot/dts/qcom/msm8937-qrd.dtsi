@@ -12,7 +12,7 @@
  */
 
 #include "msm8937-pinctrl-santoni.dtsi"
-#include "msm8937-camera-sensor-qrd-santoni.dtsi"
+#include "msm8937-camera-sensor-qrd.dtsi"
 
 &soc {
 	gpio_keys {
@@ -66,6 +66,7 @@
 		"AMIC2", "MIC BIAS Internal2",
 		"AMIC3", "MIC BIAS External";
 };
+
 
 &blsp1_uart2 {
 	status = "ok";

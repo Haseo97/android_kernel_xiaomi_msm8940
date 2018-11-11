@@ -1,4 +1,5 @@
-/* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+/*
+ * Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -14,13 +15,13 @@
 
 &spmi_bus {
 
-	qcom,pmi8950@2 {
+	qcom,pmi8940@2 {
 		spmi-slave-container;
 		reg = <0x2>;
 		#address-cells = <1>;
 		#size-cells = <1>;
 
-		pmi8950_revid: qcom,revid@100 {
+		pmi8940_revid: qcom,revid@100 {
 			compatible = "qcom,qpnp-revid";
 			reg = <0x100 0x100>;
 		};
@@ -39,7 +40,7 @@
 			};
 		};
 
-		pmi8950_vadc: vadc@3100 {
+		pmi8940_vadc: vadc@3100 {
 			compatible = "qcom,qpnp-vadc";
 			reg = <0x3100 0x100>;
 			#address-cells = <1>;
@@ -114,7 +115,6 @@
 				qcom,scale-function = <16>;
 				qcom,hw-settle-time = <0>;
 				qcom,fast-avg-setup = <0>;
-				qcom,vadc-thermal-node;
 			};
 
 			chan@43 {
@@ -140,36 +140,14 @@
 			};
 		};
 
-		pmi8950_gpios: gpios {
+		pmi8940_mpps: mpps {
 			spmi-dev-container;
 			compatible = "qcom,qpnp-pin";
 			gpio-controller;
 			#gpio-cells = <2>;
 			#address-cells = <1>;
 			#size-cells = <1>;
-			label = "pmi8950-gpio";
-
-			gpio@c000 {
-				reg = <0xc000 0x100>;
-				qcom,pin-num = <1>;
-				status = "disabled";
-			};
-
-			gpio@c100 {
-				reg = <0xc100 0x100>;
-				qcom,pin-num = <2>;
-				status = "disabled";
-			};
-		};
-
-		pmi8950_mpps: mpps {
-			spmi-dev-container;
-			compatible = "qcom,qpnp-pin";
-			gpio-controller;
-			#gpio-cells = <2>;
-			#address-cells = <1>;
-			#size-cells = <1>;
-			label = "pmi8950-mpp";
+			label = "pmi8940-mpp";
 
 			mpp@a000 {
 				reg = <0xa000 0x100>;
@@ -183,12 +161,6 @@
 				status = "disabled";
 			};
 
-			mpp@a200 {
-				reg = <0xa200 0x100>;
-				qcom,pin-num = <3>;
-				status = "disabled";
-			};
-
 			mpp@a300 {
 				reg = <0xa300 0x100>;
 				qcom,pin-num = <4>;
@@ -196,7 +168,7 @@
 			};
 		};
 
-		pmi8950_charger: qcom,qpnp-smbcharger {
+		pmi8940_charger: qcom,qpnp-smbcharger {
 			spmi-dev-container;
 			compatible = "qcom,qpnp-smbcharger";
 			#address-cells = <1>;
@@ -209,13 +181,10 @@
 			qcom,rparasitic-uohm = <100000>;
 			qcom,bms-psy-name = "bms";
 			qcom,thermal-mitigation = <1500 700 600 0>;
-			qcom,parallel-usb-min-current-ma = <1400>;
-			qcom,parallel-usb-9v-min-current-ma = <900>;
-			qcom,parallel-allowed-lowering-ma = <500>;
-			qcom,pmic-revid = <&pmi8950_revid>;
+			qcom,pmic-revid = <&pmi8940_revid>;
 			qcom,force-aicl-rerun;
 			qcom,aicl-rerun-period-s = <180>;
-			dpdm-supply = <&qusb_phy>;
+			qcom,autoadjust-vfloat;
 
 			qcom,chgr@1000 {
 				reg = <0x1000 0x100>;
@@ -312,7 +281,7 @@
 			};
 		};
 
-		pmi8950_fg: qcom,fg {
+		pmi8940_fg: qcom,fg {
 			spmi-dev-container;
 			compatible = "qcom,qpnp-fg";
 			#address-cells = <1>;
@@ -323,7 +292,7 @@
 			qcom,bcl-mh-threshold-ma = <405>;
 			qcom,fg-iterm-ma = <150>;
 			qcom,fg-chg-iterm-ma = <100>;
-			qcom,pmic-revid = <&pmi8950_revid>;
+			qcom,pmic-revid = <&pmi8940_revid>;
 			qcom,fg-cutoff-voltage-mv = <3500>;
 			qcom,cycle-counter-en;
 			qcom,capacity-learning-on;
@@ -386,8 +355,8 @@
 
 		bcl@4200 {
 			compatible = "qcom,msm-bcl";
-			reg = <0x4200 0xFF 0x88E 0x2>;
-			reg-names = "fg_user_adc", "pon_spare";
+			reg = <0x4200 0xff>;
+			reg-names = "fg_user_adc";
 			interrupts = <0x2 0x42 0x0>,
 					<0x2 0x42 0x1>;
 			interrupt-names = "bcl-high-ibat-int",
@@ -402,7 +371,6 @@
 			qcom,ibat-offset-numerator = <1200>;
 			qcom,ibat-offset-denominator = <1>;
 			qcom,ibat-polling-delay-ms = <100>;
-			qcom,inhibit-derating-ua = <550000>;
 		};
 
 		qcom,leds@a100 {
@@ -412,13 +380,13 @@
 		};
 	};
 
-	qcom,pmi8950@3 {
+	qcom,pmi8940@3 {
 		spmi-slave-container;
 		reg = <0x3>;
 		#address-cells = <1>;
 		#size-cells = <1>;
 
-		pmi8950_pwm: pwm@b000 {
+		pmi8940_pwm: pwm@b000 {
 			status = "disabled";
 			compatible = "qcom,qpnp-pwm";
 			reg = <0xb000 0x100>;
@@ -434,7 +402,7 @@
 			compatible = "qcom,qpnp-labibb-regulator";
 			#address-cells = <1>;
 			#size-cells = <1>;
-			qcom,pmic-revid = <&pmi8950_revid>;
+			qcom,pmic-revid = <&pmi8940_revid>;
 
 			ibb_regulator: qcom,ibb@dc00 {
 				reg = <0xdc00 0x100>;
@@ -461,7 +429,8 @@
 
 				qcom,qpnp-ibb-full-pull-down;
 				qcom,qpnp-ibb-pull-down-enable;
-				qcom,qpnp-ibb-switching-clock-frequency = <1480>;
+				qcom,qpnp-ibb-switching-clock-frequency =
+									<1480>;
 				qcom,qpnp-ibb-limit-maximum-current = <1550>;
 				qcom,qpnp-ibb-debounce-cycle = <16>;
 				qcom,qpnp-ibb-limit-max-current-enable;
@@ -498,19 +467,14 @@
 				qcom,qpnp-lab-pfet-size = <100>;
 				qcom,qpnp-lab-max-precharge-time = <500>;
 			};
-
 		};
 
 		wled: qcom,leds@d800 {
 			compatible = "qcom,qpnp-wled";
 			reg = <0xd800 0x100>,
-				<0xd900 0x100>,
-				<0xdc00 0x100>,
-				<0xde00 0x100>;
+				<0xd900 0x100>;
 			reg-names = "qpnp-wled-ctrl-base",
-					"qpnp-wled-sink-base",
-					"qpnp-wled-ibb-base",
-					"qpnp-wled-lab-base";
+					"qpnp-wled-sink-base";
 			interrupts = <0x3 0xd8 0x2>;
 			interrupt-names = "sc-irq";
 			status = "okay";
@@ -528,7 +492,7 @@
 			qcom,hyb-thres = <625>;
 			qcom,sync-dly-us = <800>;
 			qcom,fs-curr-ua = <20000>;
-			qcom,en-cabc;
+			qcom,en-phase-stag;
 			qcom,led-strings-list = [00 01];
 			qcom,en-ext-pfet-sc-pro;
 			qcom,cons-sync-write-delay-us = <1000>;
@@ -555,9 +519,9 @@
 			qcom,vph-pwr-droop-debounce-time = <10>;
 			qcom,headroom-sense-ch0-enabled;
 			qcom,headroom-sense-ch1-enabled;
-			qcom,pmic-revid = <&pmi8950_revid>;
+			qcom,pmic-revid = <&pmi8940_revid>;
 
-			pmi8950_flash0: qcom,flash_0 {
+			pmi8940_flash0: qcom,flash_0 {
 				label = "flash";
 				qcom,led-name = "led:flash_0";
 				qcom,default-led-trigger =
@@ -568,7 +532,7 @@
 				qcom,current = <625>;
 			};
 
-			pmi8950_flash1: qcom,flash_1 {
+			pmi8940_flash1: qcom,flash_1 {
 				label = "flash";
 				qcom,led-name = "led:flash_1";
 				qcom,default-led-trigger =
@@ -579,37 +543,27 @@
 				qcom,current = <625>;
 			};
 
-			pmi8950_torch0: qcom,torch_0 {
+			pmi8940_torch0: qcom,torch_0 {
 				label = "torch";
 				qcom,led-name = "led:torch_0";
 				qcom,default-led-trigger =
 						"torch0_trigger";
 				qcom,max-current = <200>;
 				qcom,id = <0>;
-				qcom,current = <100>;
+				qcom,current = <120>;
 			};
 
-			pmi8950_torch1: qcom,torch_1 {
+			pmi8940_torch1: qcom,torch_1 {
 				label = "torch";
 				qcom,led-name = "led:torch_1";
 				qcom,default-led-trigger =
 						"torch1_trigger";
 				qcom,max-current = <200>;
 				qcom,id = <1>;
-				qcom,current = <100>;
+				qcom,current = <120>;
 			};
 
-			pmi8950_torch2: qcom,torch_2 {
-				label = "torch";
-				qcom,led-name = "flashlight";
-				qcom,default-led-trigger =
-						"torch2_trigger";
-				qcom,max-current = <200>;
-				qcom,id = <1>;
-				qcom,current = <100>;
-			};
-
-			pmi8950_switch: qcom,switch {
+			pmi8940_switch: qcom,switch {
 				label = "switch";
 				qcom,led-name = "led:switch";
 				qcom,default-led-trigger =
@@ -628,24 +582,30 @@
 			compatible = "qcom,qpnp-haptic";
 			reg = <0xc000 0x100>;
 			interrupts = <0x3 0xc0 0x0>,
-					<0x3 0xc0 0x1>;
+				<0x3 0xc0 0x1>;
 			interrupt-names = "sc-irq", "play-irq";
-			qcom,pmic-revid = <&pmi8950_revid>;
+			qcom,pmic-revid = <&pmi8940_revid>;
 			vcc_pon-supply = <&pon_perph_reg>;
 			qcom,play-mode = "direct";
 			qcom,wave-play-rate-us = <5263>;
-			qcom,actuator-type = "erm";
+			qcom,actuator-type = "lra";
 			qcom,wave-shape = "square";
-			qcom,vmax-mv = <2700>;
+			qcom,vmax-mv = <2000>;
 			qcom,ilim-ma = <800>;
 			qcom,sc-deb-cycles = <8>;
 			qcom,int-pwm-freq-khz = <505>;
+			qcom,en-brake;
 			qcom,brake-pattern = [03 03 00 00];
 			qcom,use-play-irq;
 			qcom,use-sc-irq;
 			qcom,wave-samples = [3e 3e 3e 3e 3e 3e 3e 3e];
 			qcom,wave-rep-cnt = <1>;
 			qcom,wave-samp-rep-cnt = <1>;
+			qcom,lra-auto-res-mode="qwd";
+			qcom,lra-high-z="opt1";
+			qcom,lra-res-cal-period = <4>;
+			qcom,correct-lra-drive-freq;
+			qcom,misc-trim-error-rc19p2-clk-reg-present;
 		};
 	};
 };
