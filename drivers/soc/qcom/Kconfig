@@ -848,7 +848,7 @@ config SERIAL_NUM
 	  Provide a interface for reading CPU serial number
 
 config QSEE_IPC_IRQ_BRIDGE
-	tristate "QSEE IPC Interrupt Brifge""
+	tristate "QSEE IPC Interrupt Bridge"
 	help
 	  This module enables bridging an Inter-Processor Communication(IPC)
 	  interrupt from a remote subsystem directed towards Qualcomm
