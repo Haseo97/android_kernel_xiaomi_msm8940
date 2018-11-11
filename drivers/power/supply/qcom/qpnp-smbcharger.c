@@ -3798,8 +3798,8 @@ void get_capacity_disable_charging(struct smbchg_chip *chip)
 {
 	char *boardid_string = NULL;
 	char boardid_start[32] = " ";
-	int India_0;
-	int India_1;
+	int India_0 = 0;
+	int India_1 = 0;
  	boardid_string = strstr(saved_command_line, "board_id=");
  	if (boardid_string != NULL) {
 		strncpy(boardid_start, boardid_string+9, 9);
@@ -3818,6 +3818,8 @@ static void smbchg_external_power_changed(struct power_supply *psy)
 {
 	struct smbchg_chip *chip = power_supply_get_drvdata(psy);
 	int rc, soc;
+	enum power_supply_type usb_supply_type;
+	char *usb_type_name = "null";
 
 	read_usb_type(chip, &usb_type_name, &usb_supply_type);
 	if ((usb_supply_type == POWER_SUPPLY_TYPE_USB) && (chip->usb_present) && (rerun_usb_insertion < 1)) {
